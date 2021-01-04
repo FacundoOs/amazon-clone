@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Use react
+      - uses: actions/setup
       - name: Setup the code
       - run: npm install
       - name: Preview deploy 
