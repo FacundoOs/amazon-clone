@@ -3,10 +3,18 @@ import "./Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from "react-router-dom";
-import {useStateValue} from '../modules/StateProvider'
+import { useStateValue } from "../modules/StateProvider";
+import { auth } from "../modules/firebase";
 
 function Header() {
-  const [{basket}, dispatch] = useStateValue()
+  const [{ basket, user }, dispatch] = useStateValue();
+
+  const handleAuthentication = () => {
+    if(user) {
+      auth.signOut()
+    }
+  }
+
   return (
     <div className="header">
       <Link to="/">
@@ -20,10 +28,14 @@ function Header() {
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav">
-        <div className="header__option">
-          <span className="header__optionLineOne">Hello Guest</span>
-          <span className="header__optionLineTwo">Sign In</span>
-        </div>
+        <Link to={!user && "/login"}>
+          <div onClick={handleAuthentication} className="header__option">
+            <span className="header__optionLineOne">Hello Guest</span>
+            <span className="header__optionLineTwo">
+              {user ? "Sign Out" : "Sign In"}
+            </span>
+          </div>
+        </Link>
         <div className="header__option">
           <span className="header__optionLineOne">Return</span>
           <span className="header__optionLineTwo">& Orders</span>
@@ -33,11 +45,13 @@ function Header() {
           <span className="header__optionLineTwo">Prime</span>
         </div>
       </div>
-      <Link to="/checkout"> 
-      <div className="header__optionBasket">
-        <ShoppingBasketIcon />
-        <span className="header__optionLineTwo header__basketCount">{basket?.length}</span>
-      </div>
+      <Link to="/checkout">
+        <div className="header__optionBasket">
+          <ShoppingBasketIcon />
+          <span className="header__optionLineTwo header__basketCount">
+            {basket?.length}
+          </span>
+        </div>
       </Link>
     </div>
   );
