@@ -14,7 +14,6 @@ jobs:
       - name: Run Tests
         env:
           CI: false
-      - name: Preview deploy 
         run: npm run build && firebase deploy --only hosting
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
