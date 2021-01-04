@@ -7,13 +7,12 @@ jobs:
   build_and_preview:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use react
-      - uses: actions/setup
+      - name: Checkout Repo
+        uses: actions/checkout@v2
       - name: Setup the code
-      - run: npm install
+        run: npm install
       - name: Preview deploy 
-      - run: npm run build && firebase deploy --only hosting
+        run: npm run build && firebase deploy --only hosting
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
