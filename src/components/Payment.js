@@ -14,7 +14,7 @@ function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState("");
-  const [clienSecret, setClienSecret] = useState(true);
+  const [clientSecret, setClientSecret] = useState(true);
   const history = useHistory();
 
   const stripe = useStripe();
@@ -26,16 +26,18 @@ function Payment() {
         method: "post",
         url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
       });
-      setClienSecret(response.data.clienSecret);
+      setClientSecret(response.data.clientSecret);
     };
     getClientSecret();
   }, [basket]);
+
+  console.log("THE SECRET IS >>>", clientSecret)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
     const payload = await stripe
-      .confirmCardPayment(clienSecret, {
+      .confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
         },
