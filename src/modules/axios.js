@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from "axios";
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5001/clone-1b668/us-central1/api'
-})
+  baseURL: "https://us-central1-clone-1b668.cloudfunctions.net/api",
+});
 
-export default instance
+export default instance;
