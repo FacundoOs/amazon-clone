@@ -11,6 +11,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup the code
         run: npm install
+      - name: Run Tests
+        env:
+          CI: false
       - name: Preview deploy 
         run: npm run build && firebase deploy --only hosting
       - uses: FirebaseExtended/action-hosting-deploy@v0
